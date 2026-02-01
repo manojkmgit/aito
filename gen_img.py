@@ -4,7 +4,7 @@ from PIL import Image
 from io import BytesIO
 
 # Initialize the client with your API Key
-client = genai.Client(api_key="AIzaSyCdQ8Ig3vcwvp73Krey-JaRtLbyNZuEA3E")
+client = genai.Client(api_key="gggg")
 
 def generate_ai_image(prompt):
     print(f"Generating: {prompt}...")
