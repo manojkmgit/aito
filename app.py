@@ -96,11 +96,13 @@ elif selected == "Vision Assistant":
         st.title("👁️ Vision Assistant")
         st.write("Analyze images using Gemini's eyes.")
         
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns(3)
         with col1:
             uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
         with col2:
             camera_photo = st.camera_input("Take Photo")
+        with col3:
+            camera_photo = st.camera_input("Show Photo")
 
         source = uploaded_file or camera_photo
 
