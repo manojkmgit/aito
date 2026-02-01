@@ -11,7 +11,7 @@ st.set_page_config(page_title="AI Pro App", layout="wide")
 
 # 2. SESSION STATE INITIALIZATION
 if "api_key" not in st.session_state:
-    st.session_state.api_key = ""
+    st.session_state.api_key = st.secrets["GEMINI_API_KEY"]
 
 # 3. SIDEBAR NAVIGATION
 with st.sidebar:
