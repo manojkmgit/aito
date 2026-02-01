@@ -18,7 +18,7 @@ with st.sidebar:
     st.title("Main Menu")
     selected = option_menu(
         menu_title=None, # Set to None to hide the title inside the menu
-        options=["Home", "Chat Bot", "Image Lab", "Image Lab 2", "Image Lab 3", "Settings"], 
+        options=["Home", "Chat Bot", "Image Lab", "Vision Assistant", "Image Lab 3", "Settings"], 
         icons=["house", "robot", "palette", "brush", "bucket", "gear"], 
         menu_icon="cast", 
         default_index=0,
@@ -88,6 +88,33 @@ elif selected == "Image Lab":
                         st.image(response.generated_images[0].image.image_bytes)
                     except Exception as e:
                         st.error(f"Error generating image: {e}")
+elif selected == "Vision Assistant":
+    st.title("🎨 Nano Banana Image Lab")
+    if not st.session_state.api_key:
+        st.warning("Please enter your API Key in Settings.")
+    else:
+        st.title("👁️ Vision Assistant")
+        st.write("Analyze images using Gemini's eyes.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
+        with col2:
+            camera_photo = st.camera_input("Take Photo")
+
+        source = uploaded_file or camera_photo
+
+        if source:
+            img = Image.open(source)
+            st.image(img, width=400)
+            user_task = st.text_input("What should the AI do?", "Describe this image.")
+            client = google_genai.Client(api_key=st.session_state.api_key)
+            if st.button("Run Analysis"):
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=[user_task, img]
+                )
+                st.success(response.text)
 # 4. IMAGE LAB (MULTIMODAL)
 elif selected == "Image Lab 2":
     st.title("🎨 Nano Banana Image Lab")
